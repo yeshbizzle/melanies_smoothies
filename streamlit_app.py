@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
 import requests
+import pandas as pd
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
 #st.text(fruityvice_response.json()) 
 fv_df=st.dataframe(data=fruityvice_response.json(),use_container_width=True)
@@ -21,9 +22,10 @@ from snowflake.snowpark.functions import col
 cnx=st.connection("snowflake")
 session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
-st.dataframe(data=my_dataframe, use_container_width=True)
-
-
+#st.dataframe(data=my_dataframe, use_container_width=True)
+pd_df=my_dataframe.to_pandas()
+st.dataframe(pd_df)
+st.stop()
 ingredients_list = st.multiselect(
     "choose upto 5 options:",my_dataframe,
     max_selections=5
