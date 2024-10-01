@@ -34,6 +34,7 @@ if ingredients_list:
     ingredients_string=''
     for each_fruit in ingredients_list:
         ingredients_string+=each_fruit+' '
+        st.subheader(each_fruit+'nutiotion info')
         #st.write(ingredients_string )
         fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
         #st.text(fruityvice_response.json()) 
